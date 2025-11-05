@@ -48,9 +48,9 @@ tasks {
     }
 
     publishPlugin {
-        val token = System.getenv("PUBLISH_TOKEN")
-        if (token != null) {
-            token.set(token)
+        val publishToken = System.getenv("PUBLISH_TOKEN")
+        if (publishToken != null) {
+            token.set(publishToken)
         }
     }
 }
