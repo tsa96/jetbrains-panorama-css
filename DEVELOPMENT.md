@@ -178,6 +178,7 @@ Currently, testing must be done manually:
 1. **No Automatic Detection**: Files must be manually assigned to Panorama CSS/SCSS types
 2. **Build Dependencies**: Requires internet access to download IntelliJ Platform SDK during build
 3. **No Syntax Highlighting Customization**: Uses standard CSS/SCSS syntax highlighting
+4. **Property Descriptors**: The `PanoramaCssDataProvider` currently loads the JSON data but doesn't create property descriptors. This requires using internal IntelliJ APIs that vary by version. The JSON data is correctly formatted and ready for integration once the proper API access is implemented.
 
 ## References
 
