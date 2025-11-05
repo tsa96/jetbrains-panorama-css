@@ -1,0 +1,71 @@
+<idea-plugin>
+    <id>com.jetbrains.panorama-css</id>
+    <name>Panorama CSS Support</name>
+    <vendor email="support@jetbrains.com" url="https://github.com/tsa96/jetbrains-panorama-css">JetBrains</vendor>
+
+    <description><![CDATA[
+    Support for Panorama CSS and SCSS - a CSS variant used in Valve's Source 1/2 game engines.
+    <br/>
+    <br/>
+    Panorama is a UI framework developed and used by Valve Software for games including CS:GO, Dota 2, and other Source engine games.
+    <br/>
+    <br/>
+    Features:
+    <ul>
+        <li>Syntax highlighting for Panorama CSS and SCSS</li>
+        <li>Code completion for Panorama-specific properties</li>
+        <li>Property validation</li>
+        <li>Support for all Panorama CSS properties from the official Valve documentation</li>
+    </ul>
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.css</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Panorama CSS Language -->
+        <fileType name="Panorama CSS"
+                  implementationClass="com.jetbrains.panorama.PanoramaCssFileType"
+                  fieldName="INSTANCE"
+                  language="PanoramaCSS"
+                  extensions=""/>
+        
+        <!-- Panorama SCSS Language -->
+        <fileType name="Panorama SCSS"
+                  implementationClass="com.jetbrains.panorama.PanoramaScssFileType"
+                  fieldName="INSTANCE"
+                  language="PanoramaSCSS"
+                  extensions=""/>
+        
+        <!-- Language definitions -->
+        <lang.substitutor language="CSS"
+                          implementationClass="com.jetbrains.panorama.PanoramaCssLanguageSubstitutor"/>
+        
+        <lang.substitutor language="SCSS"
+                          implementationClass="com.jetbrains.panorama.PanoramaScssLanguageSubstitutor"/>
+
+        <!-- CSS dialect support -->
+        <css.dialect language="PanoramaCSS"
+                     implementationClass="com.jetbrains.panorama.PanoramaCssDialect"
+                     id="PanoramaCSS"
+                     name="Panorama CSS"
+                     />
+        
+        <css.dialect language="PanoramaSCSS"
+                     implementationClass="com.jetbrains.panorama.PanoramaScssDialect"
+                     id="PanoramaSCSS"
+                     name="Panorama SCSS"
+                     />
+
+        <!-- Custom CSS data provider for Panorama properties -->
+        <css.customDataProvider implementation="com.jetbrains.panorama.PanoramaCssDataProvider"/>
+        
+        <!-- File pattern mapping -->
+        <fileBasedIndex implementation="com.jetbrains.panorama.PanoramaCssFileIndex"/>
+    </extensions>
+
+    <projectListeners>
+        <listener class="com.jetbrains.panorama.PanoramaProjectListener"
+                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
+    </projectListeners>
+</idea-plugin>
