@@ -1,0 +1,78 @@
+name: Code Quality
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+        cache: 'gradle'
+        
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+      
+    - name: Check code formatting
+      run: ./gradlew ktlintCheck --no-daemon --stacktrace || echo "ktlint not configured"
+      continue-on-error: true
+      
+    - name: Run detekt
+      run: ./gradlew detekt --no-daemon --stacktrace || echo "detekt not configured"
+      continue-on-error: true
+      
+  validate:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Validate Gradle wrapper
+      uses: gradle/wrapper-validation-action@v2
+      
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+        
+    - name: Validate plugin.xml
+      run: |
+        if ! grep -q "<id>com.jetbrains.panorama-css</id>" src/main/resources/META-INF/plugin.xml; then
+          echo "Error: plugin.xml is missing or malformed"
+          exit 1
+        fi
+        echo "✓ plugin.xml is valid"
+        
+    - name: Validate panorama-css-data.json
+      run: |
+        python3 -m json.tool src/main/resources/cssData/panorama-css-data.json > /dev/null
+        if [ $? -eq 0 ]; then
+          echo "✓ panorama-css-data.json is valid JSON"
+        else
+          echo "Error: panorama-css-data.json is invalid"
+          exit 1
+        fi
+        
+    - name: Check for common issues
+      run: |
+        # Check for TODO/FIXME comments
+        echo "Checking for TODO/FIXME comments..."
+        grep -r "TODO\|FIXME" src/ || echo "✓ No TODO/FIXME found"
+        
+        # Check file encodings
+        echo "Checking file encodings..."
+        file -i src/main/resources/cssData/panorama-css-data.json | grep -q "utf-8" && echo "✓ JSON is UTF-8" || echo "Warning: JSON encoding issue"

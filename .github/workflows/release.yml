@@ -1,0 +1,103 @@
+name: Release Plugin
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version'
+        required: true
+        type: string
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+        cache: 'gradle'
+        
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+      
+    - name: Build plugin
+      run: ./gradlew build buildPlugin --no-daemon --stacktrace
+      
+    - name: Get version
+      id: version
+      run: |
+        if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+          echo "version=${{ inputs.version }}" >> $GITHUB_OUTPUT
+        else
+          echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+        fi
+        
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: v${{ steps.version.outputs.version }}
+        name: Release ${{ steps.version.outputs.version }}
+        draft: false
+        prerelease: false
+        files: build/distributions/*.zip
+        body: |
+          # JetBrains Panorama CSS Plugin v${{ steps.version.outputs.version }}
+          
+          ## Installation
+          
+          1. Download the plugin ZIP file
+          2. In your JetBrains IDE, go to Settings → Plugins
+          3. Click the gear icon ⚙️ and select "Install Plugin from Disk..."
+          4. Select the downloaded ZIP file
+          5. Restart your IDE
+          
+          ## Usage
+          
+          Right-click on a `.css` or `.scss` file and select "Override File Type" → "Panorama CSS" or "Panorama SCSS"
+          
+          See [QUICK_START.md](https://github.com/tsa96/jetbrains-panorama-css/blob/main/QUICK_START.md) for detailed usage instructions.
+          
+          ## What's Included
+          
+          - Support for 120+ Panorama CSS properties
+          - Code completion and validation
+          - Hover documentation with VDC links
+          - Support for both CSS and SCSS
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+  publish-marketplace:
+    needs: release
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+        cache: 'gradle'
+        
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+      
+    - name: Publish to JetBrains Marketplace
+      run: ./gradlew publishPlugin --no-daemon --stacktrace
+      env:
+        PUBLISH_TOKEN: ${{ secrets.JETBRAINS_MARKETPLACE_TOKEN }}
+      continue-on-error: true
