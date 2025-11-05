@@ -1,5 +1,9 @@
 # jetbrains-panorama-css
 
+[![Build Plugin](https://github.com/tsa96/jetbrains-panorama-css/actions/workflows/build.yml/badge.svg)](https://github.com/tsa96/jetbrains-panorama-css/actions/workflows/build.yml)
+[![Code Quality](https://github.com/tsa96/jetbrains-panorama-css/actions/workflows/quality.yml/badge.svg)](https://github.com/tsa96/jetbrains-panorama-css/actions/workflows/quality.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A JetBrains plugin (for WebStorm, IntelliJ IDEA, etc.) that adds support for Panorama CSS and SCSS - a CSS variant used in Valve's Source 1/2 game engines.
 
 ## About Panorama

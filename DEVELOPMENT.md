@@ -74,6 +74,16 @@ This plugin adds support for Panorama CSS and SCSS to JetBrains IDEs (WebStorm, 
 
 The built plugin will be in `build/distributions/`.
 
+### CI/CD
+
+The project uses GitHub Actions for automated builds and releases. See [CI_CD.md](CI_CD.md) for:
+- Automated build and test workflows
+- Release automation
+- JetBrains Marketplace publishing
+- Code quality checks
+
+To trigger a build on CI, simply push to `main` or `develop`, or create a pull request.
+
 ### Installation
 
 1. Build the plugin: `./gradlew buildPlugin`
