@@ -66,8 +66,6 @@ jobs:
           
           Right-click on a `.css` or `.scss` file and select "Override File Type" → "Panorama CSS" or "Panorama SCSS"
           
-          See [QUICK_START.md](https://github.com/tsa96/jetbrains-panorama-css/blob/main/QUICK_START.md) for detailed usage instructions.
-          
           ## What's Included
           
           - Support for 120+ Panorama CSS properties
