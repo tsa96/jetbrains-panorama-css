@@ -36,12 +36,21 @@ tasks {
     }
 
     signPlugin {
-        certificateChain.set(System.getenv("CERTIFICATE_CHAIN"))
-        privateKey.set(System.getenv("PRIVATE_KEY"))
-        password.set(System.getenv("PRIVATE_KEY_PASSWORD"))
+        val chain = System.getenv("CERTIFICATE_CHAIN")
+        val key = System.getenv("PRIVATE_KEY")
+        val pass = System.getenv("PRIVATE_KEY_PASSWORD")
+        
+        if (chain != null && key != null && pass != null) {
+            certificateChain.set(chain)
+            privateKey.set(key)
+            password.set(pass)
+        }
     }
 
     publishPlugin {
-        token.set(System.getenv("PUBLISH_TOKEN"))
+        val token = System.getenv("PUBLISH_TOKEN")
+        if (token != null) {
+            token.set(token)
+        }
     }
 }
