@@ -36,7 +36,7 @@ jobs:
       run: ./gradlew buildPlugin --no-daemon --stacktrace
       
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: plugin-distribution
         path: build/distributions/*.zip
@@ -44,7 +44,7 @@ jobs:
         
     - name: Upload build reports
       if: always()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: build-reports
         path: |
