@@ -1,11 +1,15 @@
 package com.jetbrains.panorama
 
-import com.intellij.psi.css.CssDialect
-
-class PanoramaScssDialect : CssDialect() {
-    override fun getName(): String = "PanoramaSCSS"
-    
-    override fun getDisplayName(): String = "Panorama SCSS"
-    
-    override fun getDialectId(): String = "PanoramaSCSS"
+/**
+ * Simple placeholder for Panorama SCSS dialect metadata.
+ *
+ * The original implementation extended the IDE's CssDialect. That type may
+ * not be available in all IDE distributions used for compilation, so we
+ * keep a lightweight class here. Wiring to the platform's dialect API is
+ * deferred until a specific target IDEA version is chosen.
+ */
+class PanoramaScssDialect {
+    fun name(): String = "PanoramaSCSS"
+    fun displayName(): String = "Panorama SCSS"
+    fun dialectId(): String = "PanoramaSCSS"
 }

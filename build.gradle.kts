@@ -18,7 +18,8 @@ dependencies {
 intellij {
     version.set("2023.1.5")
     type.set("IU")
-    plugins.set(listOf())
+    // Include the CSS plugin so classes are available at compile time
+    plugins.set(listOf("com.intellij.css"))
 }
 
 tasks {

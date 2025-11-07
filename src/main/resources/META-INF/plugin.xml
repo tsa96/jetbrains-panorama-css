@@ -37,14 +37,16 @@
                   language="PanoramaSCSS"
                   extensions=""/>
         
-        <!-- Language definitions -->
+        <!-- Language definitions (removed temporarily until API compatibility is resolved) -->
+        <!--
         <lang.substitutor language="CSS"
                           implementationClass="com.jetbrains.panorama.PanoramaCssLanguageSubstitutor"/>
         
         <lang.substitutor language="SCSS"
                           implementationClass="com.jetbrains.panorama.PanoramaScssLanguageSubstitutor"/>
 
-        <!-- CSS dialect support -->
+        CSS dialect support (removed temporarily until API compatibility is resolved) -->
+        <!--
         <css.dialect language="PanoramaCSS"
                      implementationClass="com.jetbrains.panorama.PanoramaCssDialect"
                      id="PanoramaCSS"
@@ -57,8 +59,10 @@
                      name="Panorama SCSS"
                      />
 
-        <!-- Custom CSS data provider for Panorama properties -->
+        Custom CSS data provider for Panorama properties (removed temporarily until API compatibility is resolved) -->
+        <!--
         <css.customDataProvider implementation="com.jetbrains.panorama.PanoramaCssDataProvider"/>
+        -->
         
         <!-- File pattern mapping -->
         <fileBasedIndex implementation="com.jetbrains.panorama.PanoramaCssFileIndex"/>
