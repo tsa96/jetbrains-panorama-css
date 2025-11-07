@@ -18,7 +18,7 @@ dependencies {
 intellij {
     version.set("2023.1.5")
     type.set("IU")
-    plugins.set(listOf("CSS"))
+    plugins.set(listOf("com.intellij.css"))
 }
 
 tasks {
